@@ -5,6 +5,7 @@
 [![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.4-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 [![Admin UI](https://img.shields.io/badge/Admin-Django--Unfold-4F46E5?style=for-the-badge)](https://github.com/lukas-blehr/django-unfold)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-336791?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+[![License: PPL-MVA](https://img.shields.io/badge/License-Attribution--Preserving-crimson?style=for-the-badge)](LICENSE.md)
 
 **The Chronicle** is a production-grade, editorial-standard digital journalism platform engineered with **Django 5.1** and **Python 3.12**. Inspired by modern publications such as *The New York Times*, *The Verge*, and the *BBC*, it delivers an editorial aesthetic, accessible typography, dynamic publishing workflows, a Tailwind-powered admin panel via **Django Unfold**, dark/light mode switching, full search and taxonomy filtering, and deployment configurations.
 
@@ -568,5 +569,12 @@ python manage.py test apps
 
 ---
 
-## License
-MIT License. Developed for **The Chronicle** — Independent Global Journalism.
+## License & Mandatory Attribution
+
+This project is licensed under the **Permissive Public License with Mandatory Visible Attribution (PPL-MVA)**.
+
+- **You are free to**: Use, host, customize, extend, and deploy this software for personal, editorial, and commercial projects free of charge.
+- **Mandatory Condition**: Any live or public deployment **must** retain the **"Built with ❤️ by 7AZZANI"** footer attribution with the logo hyperlinked to [https://7azzani.com/about](https://7azzani.com/about).
+- **White-Label / Attribution Removal License**: If you require a white-label deployment without the footer attribution, you can obtain a commercial exemption license at [7azzani.com/about](https://7azzani.com/about) or by emailing `licensing@7azzani.com`.
+
+See the full terms in [LICENSE.md](LICENSE.md).
