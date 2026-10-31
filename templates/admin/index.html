@@ -1,5 +1,5 @@
 {% extends 'admin/base.html' %}
-{% load i18n %}
+{% load i18n static %}
 
 {% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
 
@@ -17,5 +17,16 @@
         </div>
 
         {% include "unfold/helpers/history.html" %}
+    </div>
+{% endblock %}
+
+{% block footer %}
+    <div class="mt-12 pt-6 pb-6 border-t border-slate-200 dark:border-zinc-800 flex items-center justify-center gap-2 text-xs text-slate-500 dark:text-zinc-400">
+        <span>Built with</span>
+        <span class="text-red-500 inline-block animate-pulse text-sm" role="img" aria-label="love">❤️</span>
+        <span>by</span>
+        <a href="https://7azzani.com/about" target="_blank" rel="noopener noreferrer" class="inline-flex items-center group transition transform hover:scale-105" title="Visit 7AZZANI">
+            <img src="{% static 'images/7azzani_logo.png' %}" alt="7AZZANI" class="h-5 w-auto object-contain" />
+        </a>
     </div>
 {% endblock %}
