@@ -96,6 +96,48 @@ html.theme-transition *:after {
   background: #475569;
 }
 
+/* CKEditor 5 Article Body Enhancement */
+.article-body img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.75rem;
+  margin: 1.75rem auto;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+.article-body figure {
+  margin: 2rem 0;
+  text-align: center;
+}
+
+.article-body figure figcaption {
+  font-size: 0.8125rem;
+  color: #64748b;
+  font-style: italic;
+  margin-top: 0.625rem;
+}
+
+.dark .article-body figure figcaption {
+  color: #94a3b8;
+}
+
+.article-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.75rem 0;
+}
+
+.article-body th,
+.article-body td {
+  border: 1px solid #e2e8f0;
+  padding: 0.75rem 1rem;
+}
+
+.dark .article-body th,
+.dark .article-body td {
+  border-color: #27272a;
+}
+
 /* Print Optimization */
 @media print {
   header, footer, #breaking-news-bar, .comment-section, .share-buttons, .related-articles, #reading-progress {

@@ -1,4 +1,5 @@
-from django.test import TestCase
+from django.test import TestCase, Client
+from django.urls import reverse
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
@@ -30,3 +31,43 @@ class CustomUserTests(TestCase):
         self.assertEqual(admin.role, User.ROLE_ADMIN)
         self.assertTrue(admin.is_staff)
         self.assertTrue(admin.is_superuser)
+
+
+class CorePagesTests(TestCase):
+    def setUp(self):
+        self.client = Client()
+
+    def test_about_page(self):
+        res = self.client.get(reverse('core:about'))
+        self.assertEqual(res.status_code, 200)
+        self.assertContains(res, 'About The Chronicle')
+
+    def test_ethics_page(self):
+        res = self.client.get(reverse('core:ethics'))
+        self.assertEqual(res.status_code, 200)
+        self.assertContains(res, 'Editorial Code of Ethics')
+
+    def test_privacy_page(self):
+        res = self.client.get(reverse('core:privacy'))
+        self.assertEqual(res.status_code, 200)
+        self.assertContains(res, 'Privacy Policy')
+
+    def test_terms_page(self):
+        res = self.client.get(reverse('core:terms'))
+        self.assertEqual(res.status_code, 200)
+        self.assertContains(res, 'Terms of Service')
+
+    def test_contact_page_get(self):
+        res = self.client.get(reverse('core:contact'))
+        self.assertEqual(res.status_code, 200)
+        self.assertContains(res, 'Contact the Newsroom')
+
+    def test_contact_page_post(self):
+        res = self.client.post(reverse('core:contact'), {
+            'name': 'Whistleblower Anonymous',
+            'email': 'source@proton.me',
+            'subject': 'tip',
+            'message': 'Important documents enclosed.',
+            'honeypot': '',
+        })
+        self.assertEqual(res.status_code, 302)

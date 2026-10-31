@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Privacy Policy — The Chronicle{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-10">
+
+    <header class="border-b border-slate-200 dark:border-zinc-800 pb-8">
+        <span class="text-xs font-bold uppercase tracking-wider text-red-600 dark:text-red-400 block mb-2">
+            Legal & Data Rights
+        </span>
+        <h1 class="font-serif font-black text-4xl sm:text-5xl text-slate-950 dark:text-white tracking-tight">
+            Privacy Policy
+        </h1>
+        <p class="text-xs text-slate-500 dark:text-zinc-400 mt-2">
+            Last updated: October 31, 2026
+        </p>
+    </header>
+
+    <div class="prose prose-lg dark:prose-invert max-w-none text-slate-800 dark:text-zinc-200 leading-relaxed">
+        <h2>1. Information We Collect</h2>
+        <p>
+            The Chronicle collects minimal data necessary to deliver journalism, manage user accounts, deliver email newsletters, and moderate reader comments. We do not sell your personal data to data brokers or advertising exchanges.
+        </p>
+
+        <h2>2. Newsletter & Email Subscriptions</h2>
+        <p>
+            When you subscribe to The Chronicle Morning Briefing, your email address is used solely for editorial email delivery. Every newsletter dispatch contains a cryptographic one-click unsubscribe link.
+        </p>
+
+        <h2>3. Cookies & Session Storage</h2>
+        <p>
+            We use essential session cookies to manage reader authentication, prevent comment spam, and remember your dark/light mode display preferences locally in your browser.
+        </p>
+
+        <h2>4. Your Rights (GDPR & CCPA)</h2>
+        <p>
+            You have the right to request access to, rectification of, or permanent deletion of your account and personal data at any time by contacting privacy@chronicle.com.
+        </p>
+    </div>
+
+</div>
+{% endblock %}

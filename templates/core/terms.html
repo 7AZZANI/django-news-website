@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Terms of Service — The Chronicle{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-10">
+
+    <header class="border-b border-slate-200 dark:border-zinc-800 pb-8">
+        <span class="text-xs font-bold uppercase tracking-wider text-red-600 dark:text-red-400 block mb-2">
+            Reader Agreement
+        </span>
+        <h1 class="font-serif font-black text-4xl sm:text-5xl text-slate-950 dark:text-white tracking-tight">
+            Terms of Service
+        </h1>
+        <p class="text-xs text-slate-500 dark:text-zinc-400 mt-2">
+            Last updated: October 31, 2026
+        </p>
+    </header>
+
+    <div class="prose prose-lg dark:prose-invert max-w-none text-slate-800 dark:text-zinc-200 leading-relaxed">
+        <h2>1. Acceptance of Terms</h2>
+        <p>
+            By accessing or reading The Chronicle website, subscribing to our feeds or newsletters, or engaging in reader commentary, you agree to comply with and be bound by these Terms of Service.
+        </p>
+
+        <h2>2. Intellectual Property & Syndication</h2>
+        <p>
+            All articles, investigative reports, photographic imagery, and audio-visual assets published on The Chronicle are protected by international copyright laws. Non-commercial quoting with attribution is permitted under fair-use provisions. Full reproduction requires express written permission.
+        </p>
+
+        <h2>3. Reader Commentary Guidelines</h2>
+        <p>
+            The Chronicle maintains a moderated community. Submissions containing hate speech, harassment, commercial spam, defamatory statements, or personal doxxing will be rejected by our editorial moderators.
+        </p>
+
+        <h2>4. Open Source Platform Licensing</h2>
+        <p>
+            The underlying software code of this platform is licensed under the Permissive Public License with Mandatory Visible Attribution (PPL-MVA). See LICENSE.md for full terms.
+        </p>
+    </div>
+
+</div>
+{% endblock %}

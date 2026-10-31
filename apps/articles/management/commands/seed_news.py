@@ -764,9 +764,16 @@ class Command(BaseCommand):
                 }
             )
 
-            # Set featured image with photographic download or fallback
-            banner = fetch_or_generate_image(data.get('photo_url'), data['title'], category.name, data['bg_color'])
-            article.featured_image.save(banner.name, banner, save=True)
+            # Set featured image with photographic download or fallback (only if missing)
+            has_image = False
+            try:
+                has_image = bool(article.featured_image and os.path.exists(article.featured_image.path))
+            except Exception:
+                has_image = False
+
+            if not has_image:
+                banner = fetch_or_generate_image(data.get('photo_url'), data['title'], category.name, data['bg_color'])
+                article.featured_image.save(banner.name, banner, save=True)
 
             # Add tags
             for tag_name in data.get('tags', []):

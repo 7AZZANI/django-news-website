@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Editorial Standards & Code of Ethics — The Chronicle{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-10">
+
+    <header class="border-b border-slate-200 dark:border-zinc-800 pb-8">
+        <span class="text-xs font-bold uppercase tracking-wider text-red-600 dark:text-red-400 block mb-2">
+            Standards & Accountability
+        </span>
+        <h1 class="font-serif font-black text-4xl sm:text-5xl text-slate-950 dark:text-white tracking-tight">
+            Editorial Code of Ethics
+        </h1>
+        <p class="font-serif text-lg text-slate-600 dark:text-zinc-300 mt-3 italic">
+            Integrity, source protection, factual rigor, and prompt transparent correction.
+        </p>
+    </header>
+
+    <div class="prose prose-lg dark:prose-invert max-w-none text-slate-800 dark:text-zinc-200 leading-relaxed">
+        <h2>1. Accuracy and Verification</h2>
+        <p>
+            We adhere to strict multi-source verification standards. Factual assertions in news reports require direct confirmation from primary documentary evidence, verifiable datasets, or on-the-record testimony from qualified sources.
+        </p>
+
+        <h2>2. Anonymous Sources</h2>
+        <p>
+            Anonymity is granted only when sources face plausible danger, career retaliation, or legal jeopardy, and when the information they provide is vital to the public interest and cannot be obtained by other means.
+        </p>
+
+        <h2>3. Corrections Policy</h2>
+        <p>
+            When errors of fact occur, The Chronicle corrects them promptly and transparently. Corrections are documented at the foot of the revised article, stating the nature of the error and the date of correction.
+        </p>
+
+        <h2>4. Separation of News and Opinion</h2>
+        <p>
+            The Chronicle maintains an absolute divide between factual news reporting and commentary or analysis. Opinion essays and analytical commentary are explicitly labeled to avoid reader confusion.
+        </p>
+
+        <h2>5. Conflict of Interest</h2>
+        <p>
+            Correspondents and editors are prohibited from holding financial investments in companies or sectors they actively cover, and may not accept gifts, compensated travel, or honoraria from subjects of coverage.
+        </p>
+    </div>
+
+</div>
+{% endblock %}

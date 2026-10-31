@@ -39,10 +39,10 @@
                     Editorial Standards
                 </h4>
                 <ul class="space-y-2 text-xs">
-                    <li><a href="#" class="hover:text-red-600 dark:hover:text-red-400 transition">Code of Ethics</a></li>
-                    <li><a href="#" class="hover:text-red-600 dark:hover:text-red-400 transition">Fact-Checking Policy</a></li>
-                    <li><a href="#" class="hover:text-red-600 dark:hover:text-red-400 transition">Corrections & Errata</a></li>
-                    <li><a href="#" class="hover:text-red-600 dark:hover:text-red-400 transition">Conflict of Interest</a></li>
+                    <li><a href="{% url 'core:ethics' %}" class="hover:text-red-600 dark:hover:text-red-400 transition">Code of Ethics</a></li>
+                    <li><a href="{% url 'core:ethics' %}" class="hover:text-red-600 dark:hover:text-red-400 transition">Fact-Checking Policy</a></li>
+                    <li><a href="{% url 'core:ethics' %}" class="hover:text-red-600 dark:hover:text-red-400 transition">Corrections & Errata</a></li>
+                    <li><a href="{% url 'core:ethics' %}" class="hover:text-red-600 dark:hover:text-red-400 transition">Conflict of Interest</a></li>
                     <li><a href="{% url 'articles:rss_feed' %}" class="hover:text-red-600 dark:hover:text-red-400 transition">RSS 2.0 Syndication</a></li>
                     <li><a href="/sitemap.xml" class="hover:text-red-600 dark:hover:text-red-400 transition">XML Sitemap</a></li>
                 </ul>
@@ -54,11 +54,11 @@
                     Corporate & Trust
                 </h4>
                 <ul class="space-y-2 text-xs">
-                    <li><a href="#" class="hover:text-red-600 dark:hover:text-red-400 transition">About The Chronicle</a></li>
-                    <li><a href="#" class="hover:text-red-600 dark:hover:text-red-400 transition">Careers & Fellowships</a></li>
-                    <li><a href="#" class="hover:text-red-600 dark:hover:text-red-400 transition">Privacy Policy</a></li>
-                    <li><a href="#" class="hover:text-red-600 dark:hover:text-red-400 transition">Terms of Service</a></li>
-                    <li><a href="#" class="hover:text-red-600 dark:hover:text-red-400 transition">Contact Newsroom</a></li>
+                    <li><a href="{% url 'core:about' %}" class="hover:text-red-600 dark:hover:text-red-400 transition">About The Chronicle</a></li>
+                    <li><a href="{% url 'core:contact' %}" class="hover:text-red-600 dark:hover:text-red-400 transition">Careers & Fellowships</a></li>
+                    <li><a href="{% url 'core:privacy' %}" class="hover:text-red-600 dark:hover:text-red-400 transition">Privacy Policy</a></li>
+                    <li><a href="{% url 'core:terms' %}" class="hover:text-red-600 dark:hover:text-red-400 transition">Terms of Service</a></li>
+                    <li><a href="{% url 'core:contact' %}" class="hover:text-red-600 dark:hover:text-red-400 transition">Contact Newsroom</a></li>
                     {% if user.is_staff %}
                     <li><a href="{% url 'admin:index' %}" class="text-blue-600 dark:text-blue-400 font-semibold hover:underline">CMS Administration</a></li>
                     {% endif %}

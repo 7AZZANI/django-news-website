@@ -28,6 +28,9 @@ urlpatterns = [
     # Audience & Newsletter
     path('newsletter/', include('apps.newsletter.urls', namespace='newsletter')),
 
+    # Editorial Policy & Informational Pages
+    path('pages/', include('apps.core.urls', namespace='core')),
+
     # SEO & Syndication
     path('robots.txt', robots_txt, name='robots_txt'),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
@@ -36,7 +39,12 @@ urlpatterns = [
     path('', include('apps.articles.urls', namespace='articles')),
 ]
 
-# Serve media files in development
+# Custom HTTP Error Handlers
+handler404 = 'apps.core.views.custom_404_view'
+handler500 = 'apps.core.views.custom_500_view'
+handler403 = 'apps.core.views.custom_403_view'
+
+# Serve media and static files in development
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
