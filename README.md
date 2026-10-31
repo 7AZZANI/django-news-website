@@ -6,6 +6,7 @@
 [![Admin UI](https://img.shields.io/badge/Admin-Django--Unfold-4F46E5?style=for-the-badge)](https://github.com/lukas-blehr/django-unfold)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-336791?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
 [![License: PPL-MVA](https://img.shields.io/badge/License-Attribution--Preserving-crimson?style=for-the-badge)](LICENSE.md)
+[![Support: 7AZZANI](https://img.shields.io/badge/Support-Donate%20%26%20Request%20Projects-ff4757?style=for-the-badge&logo=heart&logoColor=white)](https://7azzani.com/donation/)
 
 **The Chronicle** is a production-grade, editorial-standard digital journalism platform engineered with **Django 5.1** and **Python 3.12**. Inspired by modern publications such as *The New York Times*, *The Verge*, and the *BBC*, it delivers an editorial aesthetic, accessible typography, dynamic publishing workflows, a Tailwind-powered admin panel via **Django Unfold**, dark/light mode switching, full search and taxonomy filtering, and deployment configurations.
 
@@ -30,6 +31,8 @@
    - [Phase 7: SSL Certificate Automation with Let's Encrypt](#phase-7-ssl-certificate-automation-with-lets-encrypt)
    - [Phase 8: Automated Zero-Downtime Deploy Script](#phase-8-automated-zero-downtime-deploy-script)
 10. [Automated Testing & Quality Assurance](#automated-testing--quality-assurance)
+11. [License & Mandatory Attribution](#license--mandatory-attribution)
+12. [Support & Next Open-Source Projects](#-support-the-creator--request-the-next-project)
 
 ---
 
@@ -578,3 +581,22 @@ This project is licensed under the **Permissive Public License with Mandatory Vi
 - **White-Label / Attribution Removal License**: If you require a white-label deployment without the footer attribution, you can obtain a commercial exemption license at [7azzani.com/about](https://7azzani.com/about) or by emailing `licensing@7azzani.com`.
 
 See the full terms in [LICENSE.md](LICENSE.md).
+
+---
+
+## 💖 Support the Creator & Request the Next Project!
+
+If you love **The Chronicle**, find it valuable for your publication, or want to see more high-quality, production-ready open-source platforms and developer tools, consider supporting my open-source work:
+
+<div align="center">
+
+[![Donate to 7AZZANI](https://img.shields.io/badge/Donate%20%26%20Support-7AZZANI-ff4757?style=for-the-badge&logo=heart&logoColor=white)](https://7azzani.com/donation/)
+
+### 👉 [Support Me at https://7azzani.com/donation/](https://7azzani.com/donation/)
+
+</div>
+
+> **💡 Have a project you want built?**  
+> If you love to support or want to see more open-source projects, you can support me at **[https://7azzani.com/donation/](https://7azzani.com/donation/)** and write your message or suggestion for the next project — **I will build it with happiness!**
+
+Thank you for supporting independent open-source engineering! 🚀
