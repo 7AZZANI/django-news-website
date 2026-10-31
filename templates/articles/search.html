@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Search Archive — The Chronicle{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
+
+    <!-- Search Header & Filters -->
+    <header class="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-2xl p-6 sm:p-8 shadow-sm">
+        <h1 class="font-serif font-black text-3xl sm:text-4xl text-slate-950 dark:text-white mb-6">
+            Search Archive
+        </h1>
+
+        <form action="{% url 'articles:search' %}" method="get" class="space-y-4">
+            <!-- Search Keyword Input -->
+            <div class="relative">
+                <svg class="w-5 h-5 text-slate-400 absolute left-4 top-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+                {{ form.q }}
+            </div>
+
+            <!-- Filter Dropdowns Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-2">
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-zinc-400 mb-1">Category</label>
+                    {{ form.category }}
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-zinc-400 mb-1">Specific Tag</label>
+                    {{ form.tag }}
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-zinc-400 mb-1">Date Published</label>
+                    {{ form.date_range }}
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-zinc-400 mb-1">Sort Order</label>
+                    {{ form.sort_by }}
+                </div>
+            </div>
+
+            <div class="flex items-center justify-between pt-3">
+                <a href="{% url 'articles:search' %}" class="text-xs text-slate-500 hover:text-slate-800 dark:text-zinc-400 dark:hover:text-white">
+                    Reset Filters
+                </a>
+                <button type="submit" class="px-6 py-2.5 rounded-lg bg-red-600 hover:bg-red-700 text-white font-semibold text-xs uppercase tracking-wider transition shadow-sm">
+                    Apply Filters
+                </button>
+            </div>
+        </form>
+    </header>
+
+    <!-- Search Results Summary -->
+    <section>
+        <div class="flex items-center justify-between pb-4 mb-8 border-b border-slate-200 dark:border-zinc-800">
+            <div>
+                <h2 class="font-serif font-bold text-xl text-slate-900 dark:text-white">
+                    Results
+                </h2>
+                {% if search_query %}
+                <p class="text-xs text-slate-500 dark:text-zinc-400 mt-1">
+                    Showing matches for <span class="font-semibold text-slate-900 dark:text-white">"{{ search_query }}"</span>
+                </p>
+                {% endif %}
+            </div>
+            <span class="text-xs font-medium text-slate-500 dark:text-zinc-400">
+                {{ paginator.count }} article{{ paginator.count|pluralize }} found
+            </span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for article in articles %}
+                {% include "includes/article_card.html" with article=article %}
+            {% empty %}
+                <div class="col-span-full py-16 text-center text-slate-400 bg-white dark:bg-zinc-900/50 rounded-2xl border border-dashed border-slate-200 dark:border-zinc-800 p-8">
+                    <svg class="w-12 h-12 text-slate-300 dark:text-zinc-600 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <p class="text-base font-medium text-slate-700 dark:text-zinc-300">No articles matched your criteria.</p>
+                    <p class="text-xs text-slate-400 mt-1">Try refining your keyword query or expanding the date filter range.</p>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Pagination -->
+        {% include "includes/pagination.html" %}
+    </section>
+
+</div>
+{% endblock %}

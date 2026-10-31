@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}404 — Dispatch Not Found — The Chronicle{% endblock %}
+
+{% block content %}
+<div class="max-w-xl mx-auto px-4 py-24 text-center">
+    <span class="font-serif font-black text-6xl text-red-600 block mb-4">404</span>
+    <h1 class="font-serif font-black text-3xl text-slate-900 dark:text-white mb-3">
+        Dispatch Not Found
+    </h1>
+    <p class="text-sm text-slate-600 dark:text-zinc-400 leading-relaxed mb-8">
+        The story or section you are attempting to access may have been updated, relocated to an archive volume, or is temporarily unavailable.
+    </p>
+
+    <div class="flex items-center justify-center gap-3">
+        <a href="{% url 'articles:home' %}" class="px-5 py-2.5 rounded-lg bg-slate-900 dark:bg-zinc-800 text-white font-semibold text-xs uppercase tracking-wider hover:bg-red-600 transition">
+            Return to Homepage
+        </a>
+        <a href="{% url 'articles:search' %}" class="px-5 py-2.5 rounded-lg border border-slate-300 dark:border-zinc-700 text-slate-700 dark:text-zinc-300 font-semibold text-xs uppercase tracking-wider hover:bg-slate-100 dark:hover:bg-zinc-800 transition">
+            Search Archive
+        </a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,133 @@
+<header class="border-b border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 sticky top-0 z-40">
+    <!-- Top Utility Bar -->
+    <div class="border-b border-slate-100 dark:border-zinc-900 bg-slate-50/70 dark:bg-zinc-900/40 text-xs py-1.5 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-4 text-slate-500 dark:text-zinc-400">
+                <span class="font-medium text-slate-700 dark:text-zinc-300">
+                    {{ CURRENT_DATE|date:"l, F d, Y" }}
+                </span>
+                <span class="hidden sm:inline-block text-slate-300 dark:text-zinc-700">|</span>
+                <span class="hidden sm:inline-block">Global Edition</span>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <a href="{% url 'articles:rss_feed' %}" class="hidden sm:flex items-center gap-1 text-slate-500 hover:text-slate-900 dark:text-zinc-400 dark:hover:text-white" title="RSS Feed">
+                    <svg class="w-3.5 h-3.5 text-amber-500" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M6.18 15.64a2.18 2.18 0 0 1 2.18 2.18C8.36 19 7.38 20 6.18 20C5 20 4 19 4 17.82a2.18 2.18 0 0 1 2.18-2.18M4 4.44A15.56 15.56 0 0 1 19.56 20h-2.83A12.73 12.73 0 0 0 4 7.27V4.44m0 5.66a9.9 9.9 0 0 1 9.9 9.9h-2.83A7.07 7.07 0 0 0 4 12.93V10.1Z"/>
+                    </svg>
+                    <span>RSS</span>
+                </a>
+
+                <!-- Theme Toggle Button -->
+                <button type="button" class="theme-toggle p-1 rounded-md text-slate-500 hover:text-slate-900 dark:text-zinc-400 dark:hover:text-white focus:outline-none" aria-label="Toggle Dark/Light Mode">
+                    <svg class="w-4 h-4 theme-icon-sun hidden text-amber-500" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>
+                    </svg>
+                    <svg class="w-4 h-4 theme-icon-moon text-slate-600 dark:text-slate-300" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                    </svg>
+                </button>
+
+                <span class="text-slate-300 dark:text-zinc-700">|</span>
+
+                <!-- User Menu / Sign In -->
+                {% if user.is_authenticated %}
+                    <div class="flex items-center gap-2">
+                        <span class="font-medium text-slate-700 dark:text-zinc-300 truncate max-w-[120px]">{{ user.first_name|default:user.username }}</span>
+                        {% if user.is_staff %}
+                        <a href="{% url 'admin:index' %}" class="px-2 py-0.5 rounded bg-slate-200 dark:bg-zinc-800 text-slate-800 dark:text-zinc-200 hover:bg-slate-300 text-[11px] font-semibold">
+                            Admin
+                        </a>
+                        {% endif %}
+                        <a href="{% url 'logout' %}" class="text-slate-500 hover:text-red-600 dark:hover:text-red-400">Exit</a>
+                    </div>
+                {% else %}
+                    <div class="flex items-center gap-3">
+                        <a href="{% url 'login' %}" class="text-slate-600 hover:text-slate-900 dark:text-zinc-400 dark:hover:text-white font-medium">
+                            Sign In
+                        </a>
+                        <a href="{% url 'register' %}" class="bg-red-600 hover:bg-red-700 text-white px-2.5 py-1 rounded text-[11px] font-semibold uppercase tracking-wider transition">
+                            Subscribe
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Masthead -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex items-center justify-between">
+        <!-- Left: Quick Search Button -->
+        <div class="flex items-center gap-3">
+            <button type="button" class="open-search-modal flex items-center gap-2 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-zinc-800 bg-slate-50 dark:bg-zinc-900 text-slate-500 dark:text-zinc-400 hover:border-slate-300 dark:hover:border-zinc-700 text-xs transition">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+                <span class="hidden sm:inline">Search news...</span>
+                <kbd class="hidden md:inline-block px-1.5 py-0.5 text-[10px] bg-white dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded text-slate-400">⌘K</kbd>
+            </button>
+        </div>
+
+        <!-- Center: Prestigious Logo Masthead -->
+        <div class="text-center">
+            <a href="{% url 'articles:home' %}" class="inline-block group">
+                <h1 class="font-serif font-black text-3xl sm:text-4xl md:text-5xl tracking-tight text-slate-950 dark:text-white group-hover:text-red-600 transition-colors duration-200">
+                    THE CHRONICLE
+                </h1>
+            </a>
+            <p class="text-[11px] font-serif uppercase tracking-[0.2em] text-slate-500 dark:text-zinc-400 mt-1 hidden sm:block">
+                Veritas & Lumen · Independent Global Journalism
+            </p>
+        </div>
+
+        <!-- Right: Mobile Menu Hamburger & Quick Action -->
+        <div class="flex items-center gap-3">
+            <a href="{% url 'articles:search' %}" class="hidden sm:inline-flex text-xs font-semibold text-slate-700 dark:text-zinc-300 hover:text-red-600 dark:hover:text-red-400">
+                Archive
+            </a>
+            <button id="mobile-menu-btn" class="lg:hidden p-2 rounded-lg text-slate-700 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-800" aria-label="Open Navigation">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Editorial Category Navigation Bar -->
+    <nav class="hidden lg:block border-t border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-950">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <ul class="flex items-center justify-between text-sm font-semibold tracking-wide uppercase py-2.5">
+                <li>
+                    <a href="{% url 'articles:home' %}" class="text-slate-900 dark:text-white hover:text-red-600 dark:hover:text-red-400 transition">
+                        Home
+                    </a>
+                </li>
+                {% for cat in HEADER_CATEGORIES %}
+                <li class="relative group">
+                    <a href="{{ cat.get_absolute_url }}" class="flex items-center gap-1 text-slate-700 dark:text-zinc-300 hover:text-red-600 dark:hover:text-red-400 py-1 transition">
+                        <span>{{ cat.name }}</span>
+                        {% if cat.subcategories.all %}
+                        <svg class="w-3.5 h-3.5 text-slate-400 group-hover:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                        {% endif %}
+                    </a>
+
+                    <!-- Subcategories Dropdown -->
+                    {% if cat.subcategories.all %}
+                    <div class="absolute left-0 top-full pt-2 w-56 opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition duration-200 z-50">
+                        <div class="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl shadow-xl py-2 px-1">
+                            {% for sub in cat.subcategories.all %}
+                            <a href="{{ sub.get_absolute_url }}" class="block px-3 py-2 text-xs font-medium normal-case text-slate-700 dark:text-zinc-300 hover:bg-slate-50 dark:hover:bg-zinc-800 hover:text-red-600 dark:hover:text-red-400 rounded-lg transition">
+                                {{ sub.name }}
+                            </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </nav>
+</header>

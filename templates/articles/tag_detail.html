@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}#{{ tag.name }} — Topic Focus — The Chronicle{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
+
+    <!-- Tag Header -->
+    <header class="border-b border-slate-200 dark:border-zinc-800 pb-8">
+        <span class="text-xs font-bold uppercase tracking-wider text-red-600 dark:text-red-400 block mb-2">
+            Topic Focus
+        </span>
+        <h1 class="font-serif font-black text-4xl sm:text-5xl text-slate-950 dark:text-white tracking-tight">
+            #{{ tag.name }}
+        </h1>
+        <p class="text-sm text-slate-500 dark:text-zinc-400 mt-2">
+            Explore articles and analysis tagged with {{ tag.name }}.
+        </p>
+    </header>
+
+    <!-- Articles Grid -->
+    <section>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for article in articles %}
+                {% include "includes/article_card.html" with article=article %}
+            {% empty %}
+                <div class="col-span-full py-16 text-center text-slate-400">
+                    <p class="text-base">No articles found matching this topic.</p>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Pagination -->
+        {% include "includes/pagination.html" %}
+    </section>
+
+</div>
+{% endblock %}

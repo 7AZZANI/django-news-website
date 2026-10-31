@@ -1,0 +1,41 @@
+{% if BREAKING_NEWS %}
+<div id="breaking-news-bar" class="bg-red-600 dark:bg-red-700 text-white text-xs py-2 px-4 sm:px-6 lg:px-8 border-b border-red-700 dark:border-red-800 transition-colors duration-200">
+    <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
+        <div class="flex items-center gap-3 shrink-0">
+            <span class="relative flex h-2 w-2">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
+            </span>
+            <span class="font-black uppercase tracking-wider text-[11px] bg-red-800/80 px-2 py-0.5 rounded">
+                Breaking News
+            </span>
+        </div>
+
+        <div class="flex-grow overflow-hidden relative h-5">
+            {% for item in BREAKING_NEWS %}
+            <div class="ticker-item flex items-center gap-2 truncate transition-all duration-300 {% if not forloop.first %}hidden{% endif %}">
+                <a href="{{ item.get_absolute_url }}" class="hover:underline font-medium truncate text-white">
+                    {{ item.title }}
+                </a>
+                <span class="text-red-200 text-[10px] shrink-0">
+                    ({{ item.published_at|timesince }} ago)
+                </span>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="flex items-center gap-1 shrink-0 text-white/80">
+            <button id="ticker-prev" class="p-1 hover:text-white hover:bg-red-700 rounded transition" aria-label="Previous Breaking Story">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"></path>
+                </svg>
+            </button>
+            <button id="ticker-next" class="p-1 hover:text-white hover:bg-red-700 rounded transition" aria-label="Next Breaking Story">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </button>
+        </div>
+    </div>
+</div>
+{% endif %}

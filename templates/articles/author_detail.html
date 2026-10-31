@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ author.get_full_name_or_username }} — Editorial Staff — The Chronicle{% endblock %}
+{% block meta_description %}Author profile and published reporting by {{ author.get_full_name_or_username }}, {{ author.job_title }} at The Chronicle.{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
+
+    <!-- Author Profile Header -->
+    <header class="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-2xl p-6 sm:p-10 shadow-sm flex flex-col sm:flex-row items-center sm:items-start gap-8">
+        <img src="{{ author.avatar_url }}" alt="{{ author.get_full_name_or_username }}" 
+            class="w-28 h-28 sm:w-36 sm:h-36 rounded-full object-cover border-4 border-slate-100 dark:border-zinc-800 shadow-md shrink-0">
+
+        <div class="space-y-4 text-center sm:text-left flex-grow">
+            <div>
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-red-100 text-red-800 dark:bg-red-900/40 dark:text-red-300 mb-2">
+                    {{ author.get_role_display }}
+                </span>
+                <h1 class="font-serif font-black text-3xl sm:text-4xl text-slate-950 dark:text-white">
+                    {{ author.get_full_name_or_username }}
+                </h1>
+                {% if author.job_title %}
+                <p class="text-sm font-semibold text-slate-500 dark:text-zinc-400 mt-1">
+                    {{ author.job_title }}
+                </p>
+                {% endif %}
+            </div>
+
+            <p class="text-sm text-slate-600 dark:text-zinc-300 max-w-2xl leading-relaxed">
+                {{ author.bio|default:"Staff writer contributing investigations, essays, and reports across global beats." }}
+            </p>
+
+            <!-- Social Links -->
+            <div class="flex items-center justify-center sm:justify-start gap-4 pt-2">
+                {% if author.twitter_handle %}
+                <a href="https://twitter.com/{{ author.twitter_handle|slice:'1:' }}" target="_blank" rel="noopener noreferrer" 
+                    class="text-xs font-medium text-slate-500 dark:text-zinc-400 hover:text-blue-500 flex items-center gap-1.5 transition">
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                    <span>{{ author.twitter_handle }}</span>
+                </a>
+                {% endif %}
+
+                {% if author.linkedin_url %}
+                <a href="{{ author.linkedin_url }}" target="_blank" rel="noopener noreferrer" 
+                    class="text-xs font-medium text-slate-500 dark:text-zinc-400 hover:text-blue-600 flex items-center gap-1.5 transition">
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                    <span>LinkedIn</span>
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+
+    <!-- Published Articles -->
+    <section>
+        <div class="flex items-center justify-between pb-4 mb-8 border-b border-slate-200 dark:border-zinc-800">
+            <h2 class="font-serif font-black text-2xl text-slate-900 dark:text-white">
+                Articles by {{ author.first_name|default:author.username }}
+            </h2>
+            <span class="text-xs text-slate-400">{{ paginator.count }} published dispatches</span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for article in articles %}
+                {% include "includes/article_card.html" with article=article %}
+            {% empty %}
+                <div class="col-span-full py-16 text-center text-slate-400">
+                    <p class="text-base">No articles published by this author yet.</p>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Pagination -->
+        {% include "includes/pagination.html" %}
+    </section>
+
+</div>
+{% endblock %}

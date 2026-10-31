@@ -1,0 +1,11 @@
+[Unit]
+Description=Gunicorn socket for The Chronicle News Application
+
+[Socket]
+ListenStream=/run/chronicle.sock
+SocketUser=www-data
+SocketGroup=www-data
+SocketMode=0660
+
+[Install]
+WantedBy=sockets.target

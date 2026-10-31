@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}500 — Server Incident — The Chronicle{% endblock %}
+
+{% block content %}
+<div class="max-w-xl mx-auto px-4 py-24 text-center">
+    <span class="font-serif font-black text-6xl text-slate-400 dark:text-zinc-600 block mb-4">500</span>
+    <h1 class="font-serif font-black text-3xl text-slate-900 dark:text-white mb-3">
+        Editorial Production Interruption
+    </h1>
+    <p class="text-sm text-slate-600 dark:text-zinc-400 leading-relaxed mb-8">
+        Our technical systems encountered an unexpected condition while formatting this transmission. Incident logging has notified our systems engineers.
+    </p>
+
+    <a href="{% url 'articles:home' %}" class="inline-flex items-center px-6 py-2.5 rounded-lg bg-slate-900 dark:bg-zinc-800 text-white font-semibold text-xs uppercase tracking-wider hover:bg-red-600 transition">
+        Return to Safety
+    </a>
+</div>
+{% endblock %}

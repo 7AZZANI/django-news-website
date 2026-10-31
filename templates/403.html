@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}403 — Access Restricted — The Chronicle{% endblock %}
+
+{% block content %}
+<div class="max-w-xl mx-auto px-4 py-24 text-center">
+    <span class="font-serif font-black text-6xl text-amber-500 block mb-4">403</span>
+    <h1 class="font-serif font-black text-3xl text-slate-900 dark:text-white mb-3">
+        Editorial Access Restricted
+    </h1>
+    <p class="text-sm text-slate-600 dark:text-zinc-400 leading-relaxed mb-8">
+        You do not possess the required credentials or editorial clearance level to review this resource.
+    </p>
+
+    <a href="{% url 'articles:home' %}" class="inline-flex items-center px-6 py-2.5 rounded-lg bg-slate-900 dark:bg-zinc-800 text-white font-semibold text-xs uppercase tracking-wider hover:bg-red-600 transition">
+        Return to Safety
+    </a>
+</div>
+{% endblock %}

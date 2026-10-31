@@ -1,0 +1,230 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{{ SITE_NAME }} — Independent Global Journalism{% endblock %}</title>
+    
+    <!-- SEO & Social Metadata -->
+    <meta name="description" content="{% block meta_description %}{{ SITE_TAGLINE }}. Authoritative reporting on world affairs, technology, economy, and culture.{% endblock %}">
+    <meta name="robots" content="{% block robots %}index, follow{% endblock %}">
+    <link rel="canonical" href="{% block canonical %}{{ request.build_absolute_uri }}{% endblock %}">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:site_name" content="{{ SITE_NAME }}">
+    <meta property="og:title" content="{% block og_title %}{% block title_plain %}{{ SITE_NAME }} — Independent Global Journalism{% endblock %}{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}{{ SITE_TAGLINE }}{% endblock %}">
+    <meta property="og:type" content="{% block og_type %}website{% endblock %}">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta property="og:image" content="{% block og_image %}{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-default.jpg' %}{% endblock %}">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="{% block twitter_card %}summary_large_image{% endblock %}">
+    <meta name="twitter:site" content="@TheChronicleNews">
+    <meta name="twitter:title" content="{% block twitter_title %}{% block title_plain2 %}{{ SITE_NAME }}{% endblock %}{% endblock %}">
+    <meta name="twitter:description" content="{% block twitter_description %}{{ SITE_TAGLINE }}{% endblock %}">
+    <meta name="twitter:image" content="{% block twitter_image %}{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-default.jpg' %}{% endblock %}">
+
+    <!-- RSS Syndication Feed Auto-Discovery -->
+    <link rel="alternate" type="application/rss+xml" title="{{ SITE_NAME }} RSS Feed" href="{% url 'articles:rss_feed' %}">
+
+    <!-- Preload Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400;1,600;1,700&display=swap" rel="stylesheet">
+
+    <!-- Dark Mode Immediate Head Script (prevents FOUC) -->
+    <script>
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+
+    <!-- TailwindCSS CDN with Custom Configuration -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            300: '#cbd5e1',
+                            400: '#94a3b8',
+                            500: '#64748b',
+                            600: '#475569',
+                            700: '#334155',
+                            800: '#1e293b',
+                            900: '#0f172a',
+                            950: '#020617',
+                        },
+                        editorial: {
+                            red: '#e11d48',
+                            dark: '#09090b',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'Georgia', 'serif'],
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% block extra_head %}{% endblock %}
+</head>
+<body class="bg-slate-50 dark:bg-zinc-950 text-slate-800 dark:text-zinc-200 min-h-screen flex flex-col font-sans selection:bg-red-500 selection:text-white transition-colors duration-200">
+    
+    <!-- Top Reading Progress Indicator (Article Detail) -->
+    <div id="reading-progress" class="fixed top-0 left-0 h-1 bg-red-600 dark:bg-red-500 z-50 w-0"></div>
+
+    <!-- Header & Navigation -->
+    {% include "includes/navbar.html" %}
+
+    <!-- Breaking News Ticker Bar -->
+    {% include "includes/breaking_ticker.html" %}
+
+    <!-- Global Flash Alerts -->
+    {% include "includes/messages.html" %}
+
+    <!-- Main Content Body -->
+    <main class="flex-grow">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    {% include "includes/footer.html" %}
+
+    <!-- Global Search Modal (Cmd+K / Ctrl+K) -->
+    <div id="search-modal" class="fixed inset-0 z-50 hidden bg-slate-900/60 dark:bg-black/80 backdrop-blur-sm items-start justify-center p-4 sm:p-6 md:p-20">
+        <div class="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-2xl w-full max-w-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+            <form action="{% url 'articles:search' %}" method="get" class="relative flex items-center border-b border-slate-200 dark:border-zinc-800 px-4">
+                <svg class="w-5 h-5 text-slate-400 dark:text-zinc-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+                <input id="modal-search-input" type="text" name="q" placeholder="Search news, topics, authors, or analysis..." 
+                    class="w-full py-4 pl-3 pr-10 bg-transparent text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none text-base">
+                <button type="button" id="close-search-modal" class="text-xs uppercase tracking-wider text-slate-400 hover:text-slate-600 dark:hover:text-zinc-200 px-2 py-1 border border-slate-200 dark:border-zinc-700 rounded-md">
+                    ESC
+                </button>
+            </form>
+            <div class="p-4 bg-slate-50 dark:bg-zinc-900/50 flex flex-wrap gap-2 text-xs text-slate-500 dark:text-zinc-400">
+                <span class="font-medium text-slate-700 dark:text-zinc-300">Trending topics:</span>
+                {% for tag in POPULAR_TAGS|slice:":6" %}
+                <a href="{% url 'articles:tag_detail' tag.slug %}" class="hover:text-blue-600 dark:hover:text-blue-400 bg-white dark:bg-zinc-800 px-2 py-1 rounded border border-slate-200 dark:border-zinc-700">
+                    #{{ tag.name }}
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobile-menu-backdrop" class="fixed inset-0 bg-black/50 z-40 hidden backdrop-blur-sm"></div>
+    <div id="mobile-menu-drawer" class="fixed top-0 right-0 bottom-0 w-80 max-w-[85vw] bg-white dark:bg-zinc-900 border-l border-slate-200 dark:border-zinc-800 z-50 transform translate-x-full transition-transform duration-300 ease-in-out p-6 flex flex-col justify-between overflow-y-auto">
+        <div>
+            <div class="flex items-center justify-between pb-6 border-b border-slate-100 dark:border-zinc-800">
+                <span class="font-serif font-black text-xl tracking-tight text-slate-900 dark:text-white">THE CHRONICLE</span>
+                <button id="mobile-menu-close" class="p-2 text-slate-400 hover:text-slate-600 dark:hover:text-zinc-200" aria-label="Close Menu">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Mobile Search Bar -->
+            <form action="{% url 'articles:search' %}" method="get" class="mt-6 mb-6">
+                <div class="relative">
+                    <input type="text" name="q" placeholder="Search articles..." 
+                        class="w-full py-2.5 pl-9 pr-3 text-sm rounded-lg border border-slate-200 dark:border-zinc-700 bg-slate-50 dark:bg-zinc-800 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-600">
+                    <svg class="w-4 h-4 text-slate-400 absolute left-3 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                </div>
+            </form>
+
+            <!-- Navigation Links -->
+            <nav class="space-y-1">
+                <a href="{% url 'articles:home' %}" class="block px-3 py-2.5 text-base font-semibold rounded-lg text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-zinc-800">
+                    Home
+                </a>
+                {% for cat in HEADER_CATEGORIES %}
+                <div class="py-1">
+                    <a href="{{ cat.get_absolute_url }}" class="flex items-center justify-between px-3 py-2 text-base font-medium rounded-lg text-slate-700 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-800">
+                        <span>{{ cat.name }}</span>
+                    </a>
+                    {% if cat.subcategories.all %}
+                    <div class="pl-6 space-y-1 mt-1 border-l-2 border-slate-100 dark:border-zinc-800 ml-3">
+                        {% for sub in cat.subcategories.all %}
+                        <a href="{{ sub.get_absolute_url }}" class="block py-1 text-sm text-slate-500 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white">
+                            {{ sub.name }}
+                        </a>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </nav>
+        </div>
+
+        <div class="pt-6 border-t border-slate-100 dark:border-zinc-800 space-y-4">
+            <!-- Dark / Light Mode Switch in Mobile -->
+            <div class="flex items-center justify-between">
+                <span class="text-sm font-medium text-slate-600 dark:text-zinc-400">Appearance</span>
+                <button type="button" class="theme-toggle p-2 rounded-lg bg-slate-100 dark:bg-zinc-800 text-slate-600 dark:text-zinc-300" aria-label="Toggle theme">
+                    <svg class="w-5 h-5 theme-icon-sun hidden text-amber-500" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>
+                    </svg>
+                    <svg class="w-5 h-5 theme-icon-moon text-slate-700 dark:text-slate-300" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                    </svg>
+                </button>
+            </div>
+
+            {% if user.is_authenticated %}
+                <div class="text-sm">
+                    <p class="font-medium text-slate-900 dark:text-white">{{ user.get_full_name_or_username }}</p>
+                    <p class="text-xs text-slate-400">{{ user.email }}</p>
+                </div>
+                {% if user.is_staff %}
+                <a href="{% url 'admin:index' %}" class="block text-center w-full py-2 bg-slate-900 dark:bg-zinc-700 text-white rounded-lg text-sm font-medium">
+                    Admin Dashboard
+                </a>
+                {% endif %}
+                <a href="{% url 'logout' %}" class="block text-center w-full py-2 border border-slate-200 dark:border-zinc-700 text-slate-700 dark:text-zinc-300 rounded-lg text-sm">
+                    Sign Out
+                </a>
+            {% else %}
+                <div class="grid grid-cols-2 gap-2">
+                    <a href="{% url 'login' %}" class="text-center py-2 px-3 border border-slate-300 dark:border-zinc-700 rounded-lg text-sm font-medium text-slate-700 dark:text-zinc-200 hover:bg-slate-100 dark:hover:bg-zinc-800">
+                        Sign In
+                    </a>
+                    <a href="{% url 'register' %}" class="text-center py-2 px-3 bg-red-600 hover:bg-red-700 text-white rounded-lg text-sm font-medium">
+                        Subscribe
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="fixed bottom-6 right-6 p-3 bg-slate-900 dark:bg-zinc-700 text-white rounded-full shadow-lg opacity-0 pointer-events-none transition-opacity duration-300 z-30 hover:bg-red-600 dark:hover:bg-red-600" aria-label="Back to Top">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+        </svg>
+    </button>
+
+    <!-- JavaScript Bundle -->
+    <script src="{% static 'js/main.js' %}"></script>
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>

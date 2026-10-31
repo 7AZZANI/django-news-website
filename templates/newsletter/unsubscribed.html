@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Unsubscribed — The Chronicle{% endblock %}
+
+{% block content %}
+<div class="max-w-xl mx-auto px-4 py-20 text-center">
+    <div class="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-3xl p-8 sm:p-12 shadow-sm">
+        <div class="w-14 h-14 rounded-full bg-slate-100 dark:bg-zinc-800 text-slate-600 dark:text-zinc-300 flex items-center justify-center mx-auto mb-6">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 19v-8.93a2 2 0 01.89-1.664l7-4.666a2 2 0 012.22 0l7 4.666A2 2 0 0121 10.07V19M3 19a2 2 0 002 2h14a2 2 0 002-2M3 19l6.75-4.5M21 19l-6.75-4.5M3 10l6.75 4.5M21 10l-6.75 4.5m0 0l-1.14.76a2 2 0 01-2.22 0l-1.14-.76"></path>
+            </svg>
+        </div>
+
+        <h1 class="font-serif font-black text-2xl text-slate-900 dark:text-white mb-3">
+            You Have Been Unsubscribed
+        </h1>
+        <p class="text-sm text-slate-600 dark:text-zinc-400 leading-relaxed mb-8">
+            Your email (<strong class="text-slate-900 dark:text-white">{{ subscriber.email }}</strong>) has been removed from The Chronicle's daily morning briefing list. We're sorry to see you go!
+        </p>
+
+        <a href="{% url 'articles:home' %}" class="inline-flex items-center justify-center px-6 py-2.5 rounded-xl bg-slate-900 dark:bg-zinc-800 text-white hover:bg-red-600 text-sm font-semibold transition">
+            Return to Homepage
+        </a>
+    </div>
+</div>
+{% endblock %}

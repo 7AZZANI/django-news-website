@@ -1,0 +1,31 @@
+[Unit]
+Description=Gunicorn daemon for The Chronicle News Application
+Requires=chronicle.socket
+After=network.target
+
+[Service]
+Type=notify
+# Non-root dedicated application user
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/chronicle
+Environment="DJANGO_SETTINGS_MODULE=news_project.settings.prod"
+EnvironmentFile=/var/www/chronicle/.env
+ExecStart=/var/www/chronicle/env/bin/gunicorn \
+          --workers 3 \
+          --threads 2 \
+          --worker-class gthread \
+          --worker-tmp-dir /dev/shm \
+          --bind unix:/run/chronicle.sock \
+          --access-logfile /var/log/chronicle/gunicorn_access.log \
+          --error-logfile /var/log/chronicle/gunicorn_error.log \
+          --capture-output \
+          --log-level info \
+          news_project.wsgi:application
+ExecReload=/bin/kill -s HUP $MAINPID
+KillMode=mixed
+TimeoutStopSec=5
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

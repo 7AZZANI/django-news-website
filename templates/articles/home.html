@@ -1,0 +1,184 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+
+    <!-- 1. Hero Editorial Section (Lead Story + Top Secondary Stories) -->
+    <section class="border-b border-slate-200 dark:border-zinc-800 pb-12">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            
+            <!-- Lead Story (7 columns) -->
+            {% if lead_story %}
+            <div class="lg:col-span-7 group">
+                <article class="flex flex-col">
+                    <a href="{{ lead_story.get_absolute_url }}" class="block relative aspect-[16/9] rounded-2xl overflow-hidden bg-slate-100 dark:bg-zinc-800 mb-5 shadow-sm">
+                        {% if lead_story.featured_image %}
+                            <img src="{{ lead_story.featured_image.url }}" alt="{{ lead_story.title }}" 
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out">
+                        {% endif %}
+                        <span class="absolute top-4 left-4 px-3 py-1 rounded-md text-xs font-bold uppercase tracking-wider bg-red-600 text-white shadow">
+                            Lead Story · {{ lead_story.category.name }}
+                        </span>
+                    </a>
+
+                    <div>
+                        <h2 class="font-serif font-black text-2xl sm:text-3xl lg:text-4xl leading-tight text-slate-950 dark:text-white group-hover:text-red-600 dark:group-hover:text-red-400 transition-colors duration-150 mb-3">
+                            <a href="{{ lead_story.get_absolute_url }}">
+                                {{ lead_story.title }}
+                            </a>
+                        </h2>
+
+                        <p class="text-slate-600 dark:text-zinc-300 text-base leading-relaxed mb-4">
+                            {{ lead_story.excerpt }}
+                        </p>
+
+                        <div class="flex items-center gap-3 text-xs text-slate-500 dark:text-zinc-400">
+                            <a href="{% url 'articles:author_detail' lead_story.author.username %}" class="flex items-center gap-2 hover:text-slate-900 dark:hover:text-white font-medium">
+                                <img src="{{ lead_story.author.avatar_url }}" alt="{{ lead_story.author.get_full_name_or_username }}" class="w-7 h-7 rounded-full object-cover">
+                                <span>{{ lead_story.author.get_full_name_or_username }}</span>
+                            </a>
+                            <span>•</span>
+                            <span>{{ lead_story.published_at|date:"F d, Y" }}</span>
+                            <span>•</span>
+                            <span>{{ lead_story.reading_time }} min read</span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+            {% endif %}
+
+            <!-- Secondary Top Stories (5 columns) -->
+            <div class="lg:col-span-5 divide-y divide-slate-100 dark:divide-zinc-800/80">
+                <div class="pb-3 mb-2 flex items-center justify-between">
+                    <span class="text-xs font-serif font-bold uppercase tracking-wider text-slate-400 dark:text-zinc-500">
+                        Top Editorial Stories
+                    </span>
+                    <span class="w-2 h-2 rounded-full bg-red-600"></span>
+                </div>
+
+                {% for item in secondary_stories %}
+                <article class="py-4 first:pt-0 group flex items-start justify-between gap-4">
+                    <div class="flex-grow">
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-red-600 dark:text-red-400">
+                            {{ item.category.name }}
+                        </span>
+                        <h3 class="font-serif font-bold text-base leading-snug text-slate-900 dark:text-zinc-100 group-hover:text-red-600 dark:group-hover:text-red-400 transition-colors duration-150 mt-1">
+                            <a href="{{ item.get_absolute_url }}">
+                                {{ item.title }}
+                            </a>
+                        </h3>
+                        <div class="text-[11px] text-slate-400 mt-2 flex items-center gap-2">
+                            <span>by {{ item.author.get_full_name_or_username }}</span>
+                            <span>•</span>
+                            <span>{{ item.published_at|timesince }} ago</span>
+                        </div>
+                    </div>
+                    {% if item.featured_image %}
+                    <a href="{{ item.get_absolute_url }}" class="shrink-0 w-24 h-20 rounded-xl overflow-hidden bg-slate-100 dark:bg-zinc-800">
+                        <img src="{{ item.featured_image.url }}" alt="{{ item.title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                    </a>
+                    {% endif %}
+                </article>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. Editors' Picks Section -->
+    {% if editors_picks %}
+    <section class="border-b border-slate-200 dark:border-zinc-800 pb-12">
+        <div class="flex items-center justify-between mb-6">
+            <div class="flex items-center gap-3">
+                <span class="w-3 h-3 bg-amber-500 rounded-sm"></span>
+                <h2 class="font-serif font-bold text-xl text-slate-900 dark:text-white uppercase tracking-wider text-sm">
+                    Curated Editor's Picks
+                </h2>
+            </div>
+            <span class="text-xs text-slate-400">Essential deep-dive journalism</span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {% for pick in editors_picks %}
+            <article class="group bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl p-5 shadow-sm hover:shadow-md transition flex flex-col justify-between">
+                <div>
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400">
+                        {{ pick.category.name }}
+                    </span>
+                    <h3 class="font-serif font-bold text-base text-slate-900 dark:text-white group-hover:text-red-600 dark:group-hover:text-red-400 transition-colors mt-1 mb-2">
+                        <a href="{{ pick.get_absolute_url }}">
+                            {{ pick.title }}
+                        </a>
+                    </h3>
+                    <p class="text-xs text-slate-500 dark:text-zinc-400 line-clamp-3 leading-relaxed mb-4">
+                        {{ pick.excerpt }}
+                    </p>
+                </div>
+                <div class="text-[11px] text-slate-400 pt-3 border-t border-slate-100 dark:border-zinc-800 flex items-center justify-between">
+                    <span>{{ pick.author.get_full_name_or_username }}</span>
+                    <span>{{ pick.reading_time }} min</span>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </section>
+    {% endif %}
+
+    <!-- 3. Main Feed & Sidebar Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+        <!-- Main Feed (8 columns) -->
+        <div class="lg:col-span-8 space-y-12">
+            <!-- Latest News Stream -->
+            <section>
+                <div class="flex items-center justify-between mb-6 pb-3 border-b border-slate-200 dark:border-zinc-800">
+                    <h2 class="font-serif font-black text-2xl text-slate-950 dark:text-white">
+                        Latest Dispatches
+                    </h2>
+                    <a href="{% url 'articles:search' %}?sort_by=latest" class="text-xs font-semibold text-red-600 dark:text-red-400 hover:underline">
+                        View All Archives &rarr;
+                    </a>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    {% for article in latest_articles %}
+                        {% include "includes/article_card.html" with article=article %}
+                    {% empty %}
+                        <p class="text-slate-400 text-sm">No articles available.</p>
+                    {% endfor %}
+                </div>
+
+                <!-- Pagination for Latest Articles -->
+                {% include "includes/pagination.html" with is_paginated=latest_articles.has_other_pages page_obj=latest_articles paginator=latest_articles.paginator %}
+            </section>
+
+            <!-- Category Spotlights -->
+            {% for spot in category_spotlights %}
+            <section class="pt-8 border-t border-slate-200 dark:border-zinc-800">
+                <div class="flex items-center justify-between mb-6 pb-2 border-b-2 border-slate-900 dark:border-zinc-200">
+                    <h3 class="font-serif font-black text-xl text-slate-900 dark:text-white tracking-tight">
+                        {{ spot.category.name }}
+                    </h3>
+                    <a href="{{ spot.category.get_absolute_url }}" class="text-xs font-semibold uppercase tracking-wider text-slate-600 hover:text-red-600 dark:text-zinc-400 dark:hover:text-red-400">
+                        Explore {{ spot.category.name }} &rarr;
+                    </a>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
+                    {% for article in spot.articles %}
+                        {% include "includes/article_card.html" with article=article %}
+                    {% endfor %}
+                </div>
+            </section>
+            {% endfor %}
+        </div>
+
+        <!-- Right Column Sidebar (4 columns) -->
+        <div class="lg:col-span-4">
+            <div class="sticky top-28">
+                {% include "includes/sidebar.html" %}
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

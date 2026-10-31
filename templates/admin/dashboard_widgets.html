@@ -1,0 +1,140 @@
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    <!-- Card 1: Total Articles -->
+    <div class="bg-white dark:bg-zinc-800/80 rounded-xl p-5 border border-slate-200 dark:border-zinc-700/60 shadow-sm transition hover:shadow-md">
+        <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-zinc-400">Total Articles</span>
+            <div class="w-9 h-9 rounded-lg bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400">
+                <span class="material-symbols-outlined text-lg">newspaper</span>
+            </div>
+        </div>
+        <div class="text-3xl font-bold text-slate-900 dark:text-white mb-2">{{ kpi_total_articles|default:0 }}</div>
+        <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-zinc-400">
+            <span class="inline-flex items-center text-emerald-600 dark:text-emerald-400 font-medium">
+                ● {{ kpi_published_articles|default:0 }} Published
+            </span>
+            <span>•</span>
+            <span class="text-amber-600 dark:text-amber-400 font-medium">
+                {{ kpi_review_articles|default:0 }} Review
+            </span>
+            <span>•</span>
+            <span>{{ kpi_draft_articles|default:0 }} Draft</span>
+        </div>
+    </div>
+
+    <!-- Card 2: Comments Pending -->
+    <div class="bg-white dark:bg-zinc-800/80 rounded-xl p-5 border border-slate-200 dark:border-zinc-700/60 shadow-sm transition hover:shadow-md">
+        <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-zinc-400">Comments Pending</span>
+            <div class="w-9 h-9 rounded-lg bg-amber-50 dark:bg-amber-900/30 flex items-center justify-center text-amber-600 dark:text-amber-400">
+                <span class="material-symbols-outlined text-lg">chat_bubble</span>
+            </div>
+        </div>
+        <div class="text-3xl font-bold text-slate-900 dark:text-white mb-2">{{ kpi_comments_pending|default:0 }}</div>
+        <div class="text-xs text-slate-500 dark:text-zinc-400 flex items-center justify-between">
+            <span>Awaiting editorial review</span>
+            {% if kpi_comments_pending > 0 %}
+            <a href="{% url 'admin:articles_comment_changelist' %}?status__exact=pending" class="text-amber-600 dark:text-amber-400 font-medium hover:underline flex items-center">
+                Review &rarr;
+            </a>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Card 3: Views Today -->
+    <div class="bg-white dark:bg-zinc-800/80 rounded-xl p-5 border border-slate-200 dark:border-zinc-700/60 shadow-sm transition hover:shadow-md">
+        <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-zinc-400">Views Today</span>
+            <div class="w-9 h-9 rounded-lg bg-purple-50 dark:bg-purple-900/30 flex items-center justify-center text-purple-600 dark:text-purple-400">
+                <span class="material-symbols-outlined text-lg">trending_up</span>
+            </div>
+        </div>
+        <div class="text-3xl font-bold text-slate-900 dark:text-white mb-2">{{ kpi_views_today|default:0 }}</div>
+        <div class="text-xs text-slate-500 dark:text-zinc-400">
+            <span>All-time impressions: </span>
+            <span class="font-semibold text-slate-700 dark:text-zinc-300">{{ kpi_total_views|default:0 }}</span>
+        </div>
+    </div>
+
+    <!-- Card 4: Newsletter Subscribers -->
+    <div class="bg-white dark:bg-zinc-800/80 rounded-xl p-5 border border-slate-200 dark:border-zinc-700/60 shadow-sm transition hover:shadow-md">
+        <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-zinc-400">Subscribers</span>
+            <div class="w-9 h-9 rounded-lg bg-emerald-50 dark:bg-emerald-900/30 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
+                <span class="material-symbols-outlined text-lg">mail</span>
+            </div>
+        </div>
+        <div class="text-3xl font-bold text-slate-900 dark:text-white mb-2">{{ kpi_total_subscribers|default:0 }}</div>
+        <div class="text-xs text-slate-500 dark:text-zinc-400">
+            <span>Active email readers</span>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Overview Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+    <!-- Recent Articles -->
+    <div class="bg-white dark:bg-zinc-800/80 rounded-xl border border-slate-200 dark:border-zinc-700/60 overflow-hidden shadow-sm">
+        <div class="px-5 py-4 border-b border-slate-100 dark:border-zinc-700/60 flex items-center justify-between">
+            <h3 class="font-semibold text-sm text-slate-800 dark:text-zinc-200">Recent Editorial Articles</h3>
+            <a href="{% url 'admin:articles_article_add' %}" class="text-xs bg-slate-900 hover:bg-slate-800 dark:bg-zinc-700 dark:hover:bg-zinc-600 text-white font-medium px-2.5 py-1.5 rounded-lg transition">
+                + New Article
+            </a>
+        </div>
+        <div class="divide-y divide-slate-100 dark:divide-zinc-700/40">
+            {% for item in recent_articles %}
+            <div class="p-4 hover:bg-slate-50/50 dark:hover:bg-zinc-700/20 transition flex items-center justify-between">
+                <div class="min-w-0 pr-4">
+                    <a href="{% url 'admin:articles_article_change' item.id %}" class="text-sm font-medium text-slate-900 dark:text-zinc-100 hover:text-blue-600 truncate block">
+                        {{ item.title }}
+                    </a>
+                    <div class="text-xs text-slate-500 dark:text-zinc-400 mt-1 flex items-center gap-2">
+                        <span>{{ item.category.name }}</span>
+                        <span>•</span>
+                        <span>by {{ item.author.get_full_name_or_username }}</span>
+                    </div>
+                </div>
+                <div class="shrink-0 flex items-center gap-2">
+                    {% if item.status == 'published' %}
+                        <span class="px-2 py-0.5 text-xs rounded-full bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300">Published</span>
+                    {% elif item.status == 'review' %}
+                        <span class="px-2 py-0.5 text-xs rounded-full bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300">In Review</span>
+                    {% else %}
+                        <span class="px-2 py-0.5 text-xs rounded-full bg-slate-100 text-slate-800 dark:bg-zinc-700 dark:text-zinc-300">Draft</span>
+                    {% endif %}
+                </div>
+            </div>
+            {% empty %}
+            <div class="p-6 text-center text-sm text-slate-400">No articles created yet. Run seed script or create one above.</div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Comments Pending Review -->
+    <div class="bg-white dark:bg-zinc-800/80 rounded-xl border border-slate-200 dark:border-zinc-700/60 overflow-hidden shadow-sm">
+        <div class="px-5 py-4 border-b border-slate-100 dark:border-zinc-700/60 flex items-center justify-between">
+            <h3 class="font-semibold text-sm text-slate-800 dark:text-zinc-200">Pending Comments Moderation</h3>
+            <a href="{% url 'admin:articles_comment_changelist' %}" class="text-xs text-blue-600 dark:text-blue-400 hover:underline">
+                View All
+            </a>
+        </div>
+        <div class="divide-y divide-slate-100 dark:divide-zinc-700/40">
+            {% for c in recent_pending_comments %}
+            <div class="p-4 hover:bg-slate-50/50 dark:hover:bg-zinc-700/20 transition">
+                <div class="flex items-center justify-between mb-1">
+                    <span class="text-xs font-semibold text-slate-900 dark:text-white">{{ c.author_name }}</span>
+                    <span class="text-xs text-slate-400">{{ c.created_at|date:"M d, H:i" }}</span>
+                </div>
+                <p class="text-xs text-slate-600 dark:text-zinc-300 line-clamp-2 mb-2">{{ c.content }}</p>
+                <div class="flex items-center justify-between text-xs">
+                    <span class="text-slate-400 truncate max-w-[200px]">on: {{ c.article.title }}</span>
+                    <a href="{% url 'admin:articles_comment_change' c.id %}" class="text-blue-600 dark:text-blue-400 font-medium hover:underline">
+                        Review &rarr;
+                    </a>
+                </div>
+            </div>
+            {% empty %}
+            <div class="p-6 text-center text-sm text-slate-400">All comments are moderated! No pending comments.</div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
