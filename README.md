@@ -12,16 +12,43 @@
 
 ---
 
+## 📸 Visual Showcase & Screenshots
+
+Experience **The Chronicle**'s modern editorial aesthetic across frontend and backend interfaces:
+
+### 🌟 Editorial Frontend Experience
+
+| ☀️ Editorial Homepage (Light Mode) | 🌙 Editorial Homepage (Dark Mode) |
+| :---: | :---: |
+| ![Homepage Light](docs/screenshots/01-homepage-light.png) | ![Homepage Dark](docs/screenshots/02-homepage-dark.png) |
+
+| 📖 Long-form Article Reading Experience | ⚡ Technology Archive & Subcategory Grid |
+| :---: | :---: |
+| ![Article Detail](docs/screenshots/03-article-detail.png) | ![Category Grid](docs/screenshots/04-category-technology.png) |
+
+### 🛠️ Professional Django Admin Panel (Powered by Unfold)
+
+| 📊 Unfold Dashboard with Real-time KPI Widgets | 📱 Mobile-First Responsive Layout |
+| :---: | :---: |
+| ![Admin Dashboard](docs/screenshots/05-admin-dashboard.png) | ![Mobile View](docs/screenshots/06-mobile-view.png) |
+
+| 📝 Editorial Publishing Workflow & Moderation Queue |
+| :---: |
+| ![Admin Articles](docs/screenshots/07-admin-articles.png) |
+
+---
+
 ## Table of Contents
-1. [Tech Stack & Architecture](#tech-stack--architecture)
-2. [Project Directory Structure](#project-directory-structure)
-3. [Core Feature Highlights](#core-feature-highlights)
-4. [Local Development Quickstart](#local-development-quickstart)
-5. [Seed Data & Demo Accounts](#seed-data--demo-accounts)
-6. [Django Admin with Unfold](#django-admin-with-unfold)
-7. [Design System & Dark Mode](#design-system--dark-mode)
-8. [Tailwind CSS Build Setup](#tailwind-css-build-setup)
-9. [Comprehensive Ubuntu Production Deployment Guide](#comprehensive-ubuntu-production-deployment-guide)
+1. [Visual Showcase & Screenshots](#-visual-showcase--screenshots)
+2. [Tech Stack & Architecture](#tech-stack--architecture)
+3. [Project Directory Structure](#project-directory-structure)
+4. [Core Feature Highlights](#core-feature-highlights)
+5. [Local Development Quickstart](#local-development-quickstart)
+6. [Seed Data & Demo Accounts](#seed-data--demo-accounts)
+7. [Django Admin with Unfold](#django-admin-with-unfold)
+8. [Design System & Dark Mode](#design-system--dark-mode)
+9. [Tailwind CSS Build Setup](#tailwind-css-build-setup)
+10. [Comprehensive Ubuntu Production Deployment Guide](#comprehensive-ubuntu-production-deployment-guide)
    - [Phase 1: Server Provisioning & Non-Root User](#phase-1-server-provisioning--non-root-user)
    - [Phase 2: SSH Hardening & UFW Firewall](#phase-2-ssh-hardening--ufw-firewall)
    - [Phase 3: PostgreSQL Database Setup](#phase-3-postgresql-database-setup)
@@ -30,9 +57,9 @@
    - [Phase 6: Nginx Reverse Proxy & HTTP/2](#phase-6-nginx-reverse-proxy--http2)
    - [Phase 7: SSL Certificate Automation with Let's Encrypt](#phase-7-ssl-certificate-automation-with-lets-encrypt)
    - [Phase 8: Automated Zero-Downtime Deploy Script](#phase-8-automated-zero-downtime-deploy-script)
-10. [Automated Testing & Quality Assurance](#automated-testing--quality-assurance)
-11. [License & Mandatory Attribution](#license--mandatory-attribution)
-12. [Support & Next Open-Source Projects](#-support-the-creator--request-the-next-project)
+11. [Automated Testing & Quality Assurance](#automated-testing--quality-assurance)
+12. [License & Mandatory Attribution](#license--mandatory-attribution)
+13. [Support & Next Open-Source Projects](#-support-the-creator--request-the-next-project)
 
 ---
 
@@ -62,6 +89,8 @@ chronicle-news/
 ├── .env.example                       # Reference environment variables
 ├── .env                               # Local environment configuration
 ├── README.md                          # Documentation & deployment guide
+├── docs/
+│   └── screenshots/                   # High-resolution platform interface screenshots
 ├── deploy/
 │   ├── gunicorn.service               # Systemd application service
 │   ├── gunicorn.socket                # Systemd socket unit

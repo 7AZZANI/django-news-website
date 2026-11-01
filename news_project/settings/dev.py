@@ -48,4 +48,12 @@ STORAGES = {
 CSRF_TRUSTED_ORIGINS = [
     'http://localhost:8000',
     'http://127.0.0.1:8000',
+    'http://localhost:8008',
+    'http://127.0.0.1:8008',
 ]
+
+# Development middleware for headless admin screenshot capture
+MIDDLEWARE = list(MIDDLEWARE) + [
+    'apps.core.middleware.DevAdminAutoLoginMiddleware',
+]
+
