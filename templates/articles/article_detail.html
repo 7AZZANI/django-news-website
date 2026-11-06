@@ -139,6 +139,22 @@
                     </svg>
                 </a>
 
+                <!-- Share on WhatsApp -->
+                <a href="https://api.whatsapp.com/send?text={{ article.title|urlencode }}%20{{ request.build_absolute_uri|urlencode }}" target="_blank" rel="noopener noreferrer"
+                    class="p-2 rounded-lg border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-slate-600 dark:text-zinc-300 hover:text-emerald-500 transition" title="Share on WhatsApp">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.634.053-.984-.047-.324-.094-.741-.247-1.28-.483-1.638-.718-2.704-2.38-2.787-2.493-.082-.113-.675-.898-.675-1.713 0-.814.426-1.214.577-1.378.151-.164.33-.205.44-.205.111 0 .221.002.318.007.102.005.239-.039.373.284.144.35.494 1.206.537 1.294.044.088.073.192.015.308-.059.117-.088.19-.176.293-.088.104-.186.232-.266.312-.089.088-.182.184-.078.362.103.178.46 0.758.986 1.226.677.602 1.248.788 1.426.876.178.089.282.074.387-.044.104-.118.446-.519.565-.697.119-.178.238-.148.398-.089.16.059 1.013.477 1.187.564.174.087.291.13.334.204.043.074.043.43-.101.835z"/>
+                    </svg>
+                </a>
+
+                <!-- Bookmark Button -->
+                <button type="button" class="bookmark-btn p-2 rounded-lg border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-slate-600 dark:text-zinc-300 hover:text-amber-500 transition" 
+                    data-article-id="{{ article.id }}" data-article-title="{{ article.title }}" data-article-url="{{ article.get_absolute_url }}" title="Save for Later">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>
+                    </svg>
+                </button>
+
                 <!-- Print -->
                 <button onclick="window.print()" class="p-2 rounded-lg border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-slate-600 dark:text-zinc-300 hover:text-slate-900 dark:hover:text-white transition" title="Print Article">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -161,6 +177,25 @@
         </figcaption>
         {% endif %}
     </figure>
+    {% endif %}
+
+    <!-- AI Executive Summary Box -->
+    {% if article.ai_summary %}
+    <div class="my-8 p-6 sm:p-7 rounded-2xl bg-gradient-to-br from-indigo-50/60 via-slate-50 to-white dark:from-indigo-950/30 dark:via-zinc-900 dark:to-zinc-900 border-2 border-indigo-100 dark:border-indigo-900/40 shadow-sm relative overflow-hidden">
+        <div class="flex items-center gap-2 mb-3.5 text-indigo-700 dark:text-indigo-400 font-bold text-xs uppercase tracking-wider">
+            <span class="flex h-2 w-2 relative">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
+            </span>
+            <svg class="w-4 h-4 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+            </svg>
+            Key Findings &amp; Executive Takeaways (AI Powered)
+        </div>
+        <div class="text-slate-800 dark:text-zinc-200 text-sm sm:text-base leading-relaxed space-y-2 font-sans font-medium">
+            {{ article.ai_summary|linebreaksbr }}
+        </div>
+    </div>
     {% endif %}
 
     <!-- Article Content Body with Editorial Styling -->

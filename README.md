@@ -2,6 +2,8 @@
 
 [![Django 5.1](https://img.shields.io/badge/Django-5.1.x-0C4B33?style=for-the-badge&logo=django&logoColor=white)](https://www.djangoproject.com/)
 [![Python 3.12](https://img.shields.io/badge/Python-3.12-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![Docker](https://img.shields.io/badge/Docker-Compose%20Ready-2496ED?style=for-the-badge&logo=docker&logoColor=white)](#-1-command-docker-quickstart)
+[![AI Powered](https://img.shields.io/badge/AI-Gemini%20%26%20OpenAI-8E75C2?style=for-the-badge&logo=google&logoColor=white)](#-ai-editorial-assistant--copilot)
 [![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.4-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 [![Admin UI](https://img.shields.io/badge/Admin-Django--Unfold-4F46E5?style=for-the-badge)](https://github.com/lukas-blehr/django-unfold)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-336791?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
@@ -43,12 +45,16 @@ Experience **The Chronicle**'s modern editorial aesthetic across frontend and ba
 2. [Tech Stack & Architecture](#tech-stack--architecture)
 3. [Project Directory Structure](#project-directory-structure)
 4. [Core Feature Highlights](#core-feature-highlights)
-5. [Local Development Quickstart](#local-development-quickstart)
-6. [Seed Data & Demo Accounts](#seed-data--demo-accounts)
-7. [Django Admin with Unfold](#django-admin-with-unfold)
-8. [Design System & Dark Mode](#design-system--dark-mode)
-9. [Tailwind CSS Build Setup](#tailwind-css-build-setup)
-10. [Comprehensive Ubuntu Production Deployment Guide](#comprehensive-ubuntu-production-deployment-guide)
+5. [1-Command Docker Quickstart](#-1-command-docker-quickstart)
+6. [Local Development Quickstart](#local-development-quickstart)
+7. [AI Editorial Assistant & Copilot](#-ai-editorial-assistant--copilot)
+8. [Audience & Newsletter Email Dispatcher](#-audience--newsletter-email-dispatcher)
+9. [Scheduled Publishing Automation](#-scheduled-publishing-automation)
+10. [Seed Data & Demo Accounts](#seed-data--demo-accounts)
+11. [Django Admin with Unfold](#django-admin-with-unfold)
+12. [Design System & Dark Mode](#design-system--dark-mode)
+13. [Tailwind CSS Build Setup](#tailwind-css-build-setup)
+14. [Comprehensive Ubuntu Production Deployment Guide](#comprehensive-ubuntu-production-deployment-guide)
    - [Phase 1: Server Provisioning & Non-Root User](#phase-1-server-provisioning--non-root-user)
    - [Phase 2: SSH Hardening & UFW Firewall](#phase-2-ssh-hardening--ufw-firewall)
    - [Phase 3: PostgreSQL Database Setup](#phase-3-postgresql-database-setup)
@@ -57,9 +63,9 @@ Experience **The Chronicle**'s modern editorial aesthetic across frontend and ba
    - [Phase 6: Nginx Reverse Proxy & HTTP/2](#phase-6-nginx-reverse-proxy--http2)
    - [Phase 7: SSL Certificate Automation with Let's Encrypt](#phase-7-ssl-certificate-automation-with-lets-encrypt)
    - [Phase 8: Automated Zero-Downtime Deploy Script](#phase-8-automated-zero-downtime-deploy-script)
-11. [Automated Testing & Quality Assurance](#automated-testing--quality-assurance)
-12. [License & Mandatory Attribution](#license--mandatory-attribution)
-13. [Support & Next Open-Source Projects](#-support-the-creator--request-the-next-project)
+15. [Automated Testing & Quality Assurance](#automated-testing--quality-assurance)
+16. [License & Mandatory Attribution](#license--mandatory-attribution)
+17. [Support & Next Open-Source Projects](#-support-the-creator--request-the-next-project)
 
 ---
 
@@ -207,6 +213,25 @@ chronicle-news/
 
 ---
 
+## 🐳 1-Command Docker Quickstart
+
+The fastest way to run **The Chronicle** with PostgreSQL 16, Redis 7, Nginx, and automatic seed data:
+
+```bash
+# 1. Clone repository
+git clone https://github.com/7AZZANI/django-news-website.git
+cd django-news-website
+
+# 2. Run complete stack (Django + Postgres 16 + Redis 7 + Nginx)
+docker compose up -d --build
+```
+
+That's it! Open your browser:
+* **News Portal:** [http://localhost](http://localhost)
+* **Unfold Admin:** [http://localhost/admin/](http://localhost/admin/) (Login: `admin@chronicle.com` / `AdminNews2026!`)
+
+---
+
 ## Local Development Quickstart
 
 Follow these steps to run the application locally on Linux or macOS.
@@ -214,8 +239,8 @@ Follow these steps to run the application locally on Linux or macOS.
 ### 1. Clone & Set Up Virtual Environment
 ```bash
 # Clone the repository
-git clone https://github.com/your-org/chronicle-news.git
-cd chronicle-news
+git clone https://github.com/7AZZANI/django-news-website.git
+cd django-news-website
 
 # Create virtual environment using Python 3.12
 python3.12 -m venv env
@@ -257,6 +282,72 @@ Open your browser and navigate to:
 - **Modern Unfold Admin**: [http://127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/)
 - **RSS Syndication Feed**: [http://127.0.0.1:8000/feed/rss/](http://127.0.0.1:8000/feed/rss/)
 - **XML Sitemap**: [http://127.0.0.1:8000/sitemap.xml](http://127.0.0.1:8000/sitemap.xml)
+
+---
+
+## 🤖 AI Editorial Assistant & Copilot
+
+The Chronicle includes built-in AI intelligence to streamline newsroom workflows, supporting both **Google Gemini** and **OpenAI**:
+
+### Capabilities
+1. **Executive 3-Bullet Takeaways (TL;DR):** Extracts salient key points and renders a modern callout box on long articles.
+2. **One-Click SEO Metadata Generation:** Automatically drafts high-ranking `meta_title`, `meta_description`, and recommended `tags` directly from article text.
+3. **Headline Style Variants:** Generates alternative journalistic angles (Analysis, Explainer, Inside the Numbers).
+4. **Offline Extractive Fallback:** If no API key is set, an intelligent heuristic algorithm extracts key findings with zero external network requests.
+
+### Configuration
+In your `.env` file, configure your preferred provider:
+```bash
+# Google Gemini
+GEMINI_API_KEY=your_gemini_api_key_here
+
+# OR OpenAI
+OPENAI_API_KEY=your_openai_api_key_here
+```
+
+### Unfold Admin Integration
+Select articles in **Articles &rarr; Articles** and use the actions dropdown:
+* 🤖 **Generate AI Executive Summary (3 Key Bullets)**
+* 🎯 **Generate AI SEO Meta (Title, Description & Tags)**
+
+---
+
+## 📧 Audience & Newsletter Email Dispatcher
+
+The Chronicle features an active newsletter delivery engine with responsive editorial HTML email templates:
+
+```bash
+# Preview digest without sending
+python manage.py send_newsletter_digest --dry-run
+
+# Send a test digest to a specific reader
+python manage.py send_newsletter_digest --email="reader@example.com"
+
+# Dispatch to all active subscribers
+python manage.py send_newsletter_digest
+```
+
+* **One-Click Unsubscribe:** Fully compliant with RFC standards using secure UUID tokens (`/newsletter/unsubscribe/<token>/`).
+* **Unfold Admin Action:** Editors can select subscribers and dispatch the weekly digest directly from the admin panel.
+
+---
+
+## ⏰ Scheduled Publishing Automation
+
+Queue articles ahead of time and have them automatically go live:
+
+```bash
+# Check and publish queued articles whose published_at has arrived
+python manage.py publish_scheduled
+```
+*(Add this command to your server's crontab or Celery beat to run every 5 minutes).*
+
+---
+
+## ⚡ High-Performance Caching & Invalidation
+
+* **Database Query Reduction:** The global context processor (`HEADER_CATEGORIES`, `BREAKING_NEWS`, `TRENDING_ARTICLES`, `POPULAR_TAGS`) is cached in Redis/LocMem for 10 minutes.
+* **Instant Signal Invalidation:** Any time an `Article`, `Category`, or `Comment` is created, updated, or deleted, Django signals immediately purge and refresh the cache.
 
 ---
 

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ subject }}</title>
+    <style>
+        body { margin: 0; padding: 0; background-color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #0f172a; }
+        .container { max-width: 600px; margin: 0 auto; background-color: #ffffff; border: 1px solid #e2e8f0; }
+        .header { background-color: #0f172a; padding: 32px 24px; text-align: center; }
+        .header h1 { margin: 0; font-family: 'Georgia', serif; font-size: 28px; color: #ffffff; letter-spacing: -0.5px; }
+        .header p { margin: 6px 0 0; color: #94a3b8; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; }
+        .content { padding: 32px 24px; }
+        .lead-text { font-size: 16px; line-height: 1.6; color: #334155; margin-bottom: 28px; }
+        .story-card { margin-bottom: 28px; padding-bottom: 28px; border-bottom: 1px solid #f1f5f9; }
+        .story-card:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .category-badge { display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #e11d48; margin-bottom: 6px; }
+        .story-title { margin: 0 0 8px; font-family: 'Georgia', serif; font-size: 20px; line-height: 1.3; }
+        .story-title a { color: #0f172a; text-decoration: none; }
+        .story-title a:hover { color: #e11d48; }
+        .story-excerpt { font-size: 14px; line-height: 1.6; color: #64748b; margin: 0 0 12px; }
+        .story-meta { font-size: 12px; color: #94a3b8; }
+        .cta-btn { display: inline-block; background-color: #e11d48; color: #ffffff !important; padding: 12px 24px; border-radius: 6px; font-weight: 600; font-size: 14px; text-decoration: none; margin-top: 16px; }
+        .footer { background-color: #f1f5f9; padding: 24px; text-align: center; font-size: 12px; color: #64748b; line-height: 1.6; }
+        .footer a { color: #475569; text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Masthead -->
+        <div class="header">
+            <h1>THE CHRONICLE</h1>
+            <p>Weekly Editorial Brief &bull; {{ current_date|date:"F d, Y" }}</p>
+        </div>
+
+        <!-- Main Body -->
+        <div class="content">
+            <p class="lead-text">
+                Greetings, Reader. Here is your curated briefing of the week's most authoritative investigative journalism, global dispatches, and in-depth analyses.
+            </p>
+
+            <!-- Featured Stories -->
+            {% for article in articles %}
+            <div class="story-card">
+                <span class="category-badge">{{ article.category.name }}</span>
+                <h2 class="story-title">
+                    <a href="{{ site_url }}{{ article.get_absolute_url }}">{{ article.title }}</a>
+                </h2>
+                <p class="story-excerpt">
+                    {{ article.excerpt }}
+                </p>
+                <div class="story-meta">
+                    By {{ article.author.get_full_name_or_username }} &bull; {{ article.reading_time }} min read &bull; {{ article.published_at|date:"M d, Y" }}
+                </div>
+            </div>
+            {% endfor %}
+
+            <div style="text-align: center; margin-top: 24px;">
+                <a href="{{ site_url }}/" class="cta-btn">Read Full Editions on The Chronicle &rarr;</a>
+            </div>
+        </div>
+
+        <!-- Footer & Unsubscribe -->
+        <div class="footer">
+            <p>You received this digest because you subscribed to The Chronicle newsletter at {{ subscriber.email }}.</p>
+            <p>
+                <a href="{{ site_url }}{{ subscriber.get_unsubscribe_url }}">Unsubscribe instantly</a> &bull;
+                <a href="{{ site_url }}/privacy/">Privacy Policy</a> &bull;
+                <a href="https://7azzani.com/about">Built with ❤️ by 7AZZANI</a>
+            </p>
+            <p style="color: #94a3b8; font-size: 11px;">The Chronicle &bull; Independent Global Journalism</p>
+        </div>
+    </div>
+</body>
+</html>

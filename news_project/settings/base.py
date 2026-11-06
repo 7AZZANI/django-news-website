@@ -125,6 +125,37 @@ TAGGIT_CASE_INSENSITIVE = True
 # Site Pagination Defaults
 ARTICLES_PER_PAGE = 9
 
+# Cache Configuration (Redis support with automatic LocMem fallback)
+REDIS_URL = config('REDIS_URL', default=None)
+REDIS_HOST = config('REDIS_HOST', default=None)
+REDIS_PORT = config('REDIS_PORT', default='6379')
+
+if REDIS_URL:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+            'LOCATION': REDIS_URL,
+            'TIMEOUT': 600,
+        }
+    }
+elif REDIS_HOST:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+            'LOCATION': f'redis://{REDIS_HOST}:{REDIS_PORT}/1',
+            'TIMEOUT': 600,
+        }
+    }
+else:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+            'LOCATION': 'chronicle-cache-unique',
+            'TIMEOUT': 600,
+        }
+    }
+
+
 # Django Unfold Configuration
 UNFOLD = {
     "SITE_TITLE": "The Chronicle Admin",

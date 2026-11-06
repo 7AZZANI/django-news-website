@@ -1,0 +1,61 @@
+name: Continuous Integration & Automated Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    name: Django Test Suite & Security Audit
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_DB: test_chronicle_db
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgrespassword
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Verify Django System Checks
+        run: |
+          python manage.py check --settings=news_project.settings.dev
+
+      - name: Run Test Suite
+        env:
+          SECRET_KEY: test-secret-key-continuous-integration-pipeline-2026!
+          DB_ENGINE: django.db.backends.sqlite3
+        run: |
+          python manage.py test --settings=news_project.settings.dev -v 2
+
+      - name: Verify Seed News Command
+        env:
+          SECRET_KEY: test-secret-key-continuous-integration-pipeline-2026!
+          DB_ENGINE: django.db.backends.sqlite3
+        run: |
+          python manage.py migrate --settings=news_project.settings.dev
+          python manage.py seed_news --settings=news_project.settings.dev

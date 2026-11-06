@@ -779,6 +779,12 @@ class Command(BaseCommand):
             for tag_name in data.get('tags', []):
                 article.tags.add(tag_name)
 
+            # Generate AI Executive Summary if empty
+            if not article.ai_summary:
+                from apps.articles.ai_service import ai_assistant
+                article.ai_summary = ai_assistant.generate_executive_summary(article)
+                article.save(update_fields=['ai_summary'])
+
             created_count += 1
 
         self.stdout.write(self.style.SUCCESS(f"Loaded {created_count} high-resolution editorial articles."))

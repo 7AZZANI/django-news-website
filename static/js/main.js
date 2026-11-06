@@ -245,4 +245,56 @@
     });
   }
 
+  // 9. Reading List / Bookmarks System (localStorage)
+  const bookmarkBtns = document.querySelectorAll('.bookmark-btn');
+  const BOOKMARKS_KEY = 'chronicle_saved_articles';
+
+  function getBookmarks() {
+    try {
+      return JSON.parse(localStorage.getItem(BOOKMARKS_KEY)) || [];
+    } catch {
+      return [];
+    }
+  }
+
+  function saveBookmarks(list) {
+    localStorage.setItem(BOOKMARKS_KEY, JSON.stringify(list));
+  }
+
+  function updateBookmarkBtnState(btn, isSaved) {
+    const svg = btn.querySelector('svg');
+    if (isSaved) {
+      btn.classList.add('text-amber-500', 'border-amber-400', 'dark:border-amber-500');
+      if (svg) svg.setAttribute('fill', 'currentColor');
+      btn.setAttribute('title', 'Remove from Saved Articles');
+    } else {
+      btn.classList.remove('text-amber-500', 'border-amber-400', 'dark:border-amber-500');
+      if (svg) svg.setAttribute('fill', 'none');
+      btn.setAttribute('title', 'Save for Later');
+    }
+  }
+
+  bookmarkBtns.forEach(btn => {
+    const articleId = btn.dataset.articleId;
+    const title = btn.dataset.articleTitle;
+    const url = btn.dataset.articleUrl;
+
+    const bookmarks = getBookmarks();
+    const isSaved = bookmarks.some(b => b.id === articleId);
+    updateBookmarkBtnState(btn, isSaved);
+
+    btn.addEventListener('click', () => {
+      let current = getBookmarks();
+      const idx = current.findIndex(b => b.id === articleId);
+      if (idx > -1) {
+        current.splice(idx, 1);
+        updateBookmarkBtnState(btn, false);
+      } else {
+        current.push({ id: articleId, title, url, savedAt: new Date().toISOString() });
+        updateBookmarkBtnState(btn, true);
+      }
+      saveBookmarks(current);
+    });
+  });
+
 })();

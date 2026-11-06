@@ -38,6 +38,12 @@ staticfiles/
 node_modules/
 npm-debug.log
 
+# Archive packages
+*.zip
+*.tar.gz
+*.rar
+*.7z
+
 # IDE
 .idea/
 .vscode/

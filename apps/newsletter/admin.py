@@ -21,7 +21,12 @@ class NewsletterSubscriberAdmin(ModelAdmin):
     list_filter = ('is_active', 'is_confirmed', 'created_at')
     search_fields = ('email',)
     date_hierarchy = 'created_at'
-    actions = ['export_as_csv', 'mark_as_confirmed', 'unsubscribe_selected']
+    actions = [
+        'export_as_csv',
+        'send_digest_to_selected',
+        'mark_as_confirmed',
+        'unsubscribe_selected',
+    ]
 
     @display(description="Confirmed", boolean=True)
     def display_confirmed(self, obj):
@@ -30,6 +35,19 @@ class NewsletterSubscriberAdmin(ModelAdmin):
     @display(description="Active", boolean=True)
     def display_active(self, obj):
         return obj.is_active
+
+    @action(description="📧 Send Weekly Editorial Digest to Selected Subscribers")
+    def send_digest_to_selected(self, request, queryset):
+        from django.core.management import call_command
+        active_subs = queryset.filter(is_active=True, is_confirmed=True)
+        count = 0
+        for sub in active_subs:
+            try:
+                call_command('send_newsletter_digest', email=sub.email)
+                count += 1
+            except Exception as e:
+                self.message_user(request, f"Error sending to {sub.email}: {e}", level='ERROR')
+        self.message_user(request, f"Successfully dispatched weekly digest to {count} subscriber(s).")
 
     @action(description="Export selected subscribers to CSV")
     def export_as_csv(self, request, queryset):

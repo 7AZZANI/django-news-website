@@ -5,6 +5,8 @@ from unfold.admin import ModelAdmin, TabularInline
 from unfold.decorators import action, display
 
 from .models import Article, Category, Comment, ArticleView
+from .ai_service import ai_assistant
+
 
 
 def article_badge(request):
@@ -112,6 +114,8 @@ class ArticleAdmin(ModelAdmin):
         'revert_to_draft',
         'toggle_breaking_news',
         'toggle_featured_status',
+        'generate_ai_summary_action',
+        'generate_ai_seo_action',
     ]
 
     fieldsets = (
@@ -134,6 +138,11 @@ class ArticleAdmin(ModelAdmin):
         ('Article Content', {
             'fields': (
                 'body',
+            )
+        }),
+        ('Editorial AI Assistant & Summary', {
+            'fields': (
+                'ai_summary',
             )
         }),
         ('Publication Workflow & Flags', {
@@ -225,6 +234,38 @@ class ArticleAdmin(ModelAdmin):
             article.is_featured = not article.is_featured
             article.save(update_fields=['is_featured'])
         self.message_user(request, f"Featured status toggled for {queryset.count()} article(s).")
+
+    @action(description="🤖 Generate AI Executive Summary (3 Key Bullets)")
+    def generate_ai_summary_action(self, request, queryset):
+        count = 0
+        for article in queryset:
+            summary = ai_assistant.generate_executive_summary(article)
+            if summary:
+                article.ai_summary = summary
+                article.save(update_fields=['ai_summary'])
+                count += 1
+        self.message_user(
+            request,
+            f"Successfully generated AI executive summaries for {count} article(s)."
+        )
+
+    @action(description="🎯 Generate AI SEO Meta (Title, Description & Tags)")
+    def generate_ai_seo_action(self, request, queryset):
+        count = 0
+        for article in queryset:
+            seo_data = ai_assistant.generate_seo_metadata(article)
+            article.meta_title = seo_data['meta_title']
+            article.meta_description = seo_data['meta_description']
+            article.save(update_fields=['meta_title', 'meta_description'])
+            if seo_data.get('suggested_tags'):
+                for t in seo_data['suggested_tags']:
+                    article.tags.add(t)
+            count += 1
+        self.message_user(
+            request,
+            f"Successfully generated AI SEO metadata for {count} article(s)."
+        )
+
 
 
 @admin.register(Comment)

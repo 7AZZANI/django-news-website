@@ -147,6 +147,8 @@ class Article(models.Model):
     # SEO & Social Metadata
     meta_title = models.CharField('Meta Title', max_length=255, blank=True, help_text='SEO title tag (falls back to headline).')
     meta_description = models.CharField('Meta Description', max_length=320, blank=True, help_text='SEO description (falls back to excerpt).')
+    ai_summary = models.TextField('AI Executive Summary', blank=True, help_text='Concise bulleted summary generated via AI or editorial staff.')
+
 
     published_at = models.DateTimeField('Published Date', null=True, blank=True)
     created_at = models.DateTimeField('Created Date', auto_now_add=True)
